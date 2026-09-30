@@ -125,5 +125,11 @@ pipeline {
         """
       }
     }
+    stage('Push develop to internal repository') {
+      when { expression { !params.mergeWithTarget && params.targetBranch == 'ci-test-internal-repo-push' } }
+      steps {
+        sh "git push internal-repo ${params.sourceCommit}:refs/heads/ci-test-internal-repo-push"
+      }
+    }
   }
 }
